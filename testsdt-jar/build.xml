@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="testsdt-jar" default="all">
+
+	<property name="root"	 value=".."/>
+	<import file="${root}/properties.xml"/>
+
+	<path id="compile.class.path">
+		<fileset dir="${root}/${dtsource.dir.name}/${dist}" includes="${dtsource.jar.name}"/>
+		<fileset dir="${tomcat.home}/common/lib" includes="*-api.jar"/>
+		<fileset dir="${root}/lib" includes="**/*.jar"/>
+	</path>
+	
+	<path id="run.class.path">
+        <!-- need that for javax.http.server.HttpServletRequest -->
+        <fileset dir="${tomcat.home}/common/lib" includes="*-api.jar"/>
+        <fileset dir="${root}/${dtsource.dir.name}/${dist}" includes="${dtsource.jar.name}"/>
+		<fileset dir="${root}/lib" includes="**/*.jar"/>
+		<fileset dir="${dist}" includes="*.jar"/>
+		<!-- important to have - other way will not find applicationContext.xml -->
+		<dirset dir="${root}/"/>
+		<!-- need to have also this - because it is in the context to load -->
+		<dirset dir="${root}/${demodts.dir.name}/${build}/WEB-INF/classes/"/>
+	</path>
+	
+	<target name="all" depends="pack"/>
+	
+	<target name="compile">
+		<echo message=" **** Compiling classes of dt Tests"/>
+		<mkdir dir="${build}"/>
+		<javac srcdir="src/java" destdir="${build}" classpathref="compile.class.path" debug="${debug}" verbose="${verbose}"/>
+	</target>
+	
+	<target name="run" depends="pack">
+		<java fork="yes" classname="junit.textui.TestRunner" taskname="junit" failonerror="true" classpathref="run.class.path">
+			<arg value="com.objecty.dtsource.tests.ProcessingUtilTest"/>
+        </java>
+        <java fork="yes" classname="junit.textui.TestRunner" taskname="junit" failonerror="true" classpathref="run.class.path">
+            <arg value="com.objecty.dtsource.tests.EntityManagerTest"/>
+        </java>
+        <java fork="yes" classname="junit.textui.TestRunner" taskname="junit" failonerror="true" classpathref="run.class.path">
+            <arg value="com.objecty.dtsource.tests.RequestDependentTest"/>
+        </java>
+    </target>
+	
+	<target name="pack" depends="compile">
+		<echo message=" **** Packing everything into JAR"/>
+		<mkdir dir="${dist}"/>
+		<jar jarfile="${dist}/${testsdt.jar.name}">
+			<metainf dir="src/conf">
+				<include name="**/*.*"/>
+				<exclude name=".keepme"/>
+				<exclude name=".cvsignore"/>
+			</metainf>
+			<fileset dir="${build}">
+				<include name="**/*.class"/>
+			</fileset>
+		</jar>
+	</target>
+
+	<target name="clean">
+		<echo message=" **** Cleaning "/>
+		<delete dir="${build}"/>
+		<delete dir="${dist}"/>
+	</target>
+
+</project>

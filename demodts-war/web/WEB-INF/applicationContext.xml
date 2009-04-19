@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+
+	<!-- Define datasource using Spring's Datasource Implementation					-->
+	<!-- It's as simple direct JDBC Datasource										-->
+	<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<property name="driverClassName" value="org.gjt.mm.mysql.Driver"/>
+		<property name="url" value="jdbc:mysql://localhost:3306/dtsdb"/>
+		<property name="username" value="dts_user"/>
+		<property name="password" value="dts_pass"/>
+	</bean>
+
+	<!-- Integrate Hibernate using Spring's stuff for this 							-->
+	<!-- Complete configuration of Hibernate is here. Same like hibernate.cfg.xml 	-->
+	<bean id="sessionFactory" class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
+		<property name="dataSource">
+			<ref local="dataSource"/>
+		</property>
+		<property name="mappingResources">
+			<list>
+				<value>User.hbm.xml</value>				
+			</list>
+		</property>
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>
+				<prop key="show_sql">true</prop>
+			</props>
+		</property>
+	</bean>
+
+	<!-- Simple transaction manager, like JTA.										-->
+	<!-- We do not really need transactions now, but just in case					-->
+	<bean id="transactionManager" class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+		<property name="sessionFactory">
+			<ref local="sessionFactory"/>
+		</property>
+	</bean>
+
+	<!-- Our Entity DAO implementation for Hibernate 								-->
+	<!-- We inject into it Hibernate's session factory. That's all					-->
+	<bean id="entityHibernateDAOImpl" class="com.objecty.dtsource.dao.impl.EntityDAOHibernateImpl">
+		<property name="sessionFactory">
+			<ref local="sessionFactory"/>
+		</property>
+	</bean>    
+	<!-- Same for JDBC, but we inject just only direct datasource there 			-->
+	<bean id="entityJdbcDAOImpl" class="com.objecty.dtsource.dao.impl.EntityDAOJdbcImpl">
+		<property name="dataSource">
+			<ref local="dataSource"/>
+		</property>
+	</bean>    
+	
+	<!-- Our implementation of Entity Manager (think like business delegate)			-->
+	<!-- This one is for hibernate, using HibernateTemplate							-->
+	<bean id="entityHibernateManagerImpl" class="com.objecty.dtsource.service.impl.EntityManagerImpl">
+		<property name="entityDAO">
+			<ref local="entityHibernateDAOImpl"/>
+		</property>
+	</bean>
+	<!-- And same for JDBC - which is using JdbcTemplate instead					-->
+	<bean id="entityJdbcManagerImpl" class="com.objecty.dtsource.service.impl.EntityManagerImpl">
+		<property name="entityDAO">
+			<ref local="entityJdbcDAOImpl"/>
+		</property>
+	</bean>
+
+	<!-- Our EntityManager with transactions definitions for Hibernate 				-->
+	<!-- Please notice, that we define which methods allowed and how right here		-->
+	<!-- Actually, that makes more sense only if we would do CUD operations, not R	-->
+	<bean id="entityHibernateManager" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="transactionManager">
+			<ref local="transactionManager"/>
+		</property>
+		<property name="target">
+			<ref local="entityHibernateManagerImpl"/>
+		</property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="*">PROPAGATION_REQUIRED</prop>	<!-- add ,readOnly if only listing, no updates -->
+			</props>
+		</property>
+	</bean>
+	<!-- Same for JDBC manager 													-->
+	<bean id="entityJdbcManager" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="transactionManager">
+			<ref local="transactionManager"/>
+		</property>
+		<property name="target">
+			<ref local="entityJdbcManagerImpl"/>
+		</property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="*">PROPAGATION_REQUIRED</prop>	<!-- add ,readOnly if only listing, no updates -->
+			</props>
+		</property>
+	</bean>
+
+</beans>

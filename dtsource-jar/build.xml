@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="dtsource-jar" default="all">
+
+	<property name="root"	 value=".."/>
+	<import file="${root}/properties.xml"/>
+
+	<path id="compile.class.path">
+		<fileset dir="${tomcat.home}/common/lib" includes="*-api.jar"/>
+		<fileset dir="${root}/lib" includes="**/*.jar"/>
+	</path>
+
+	<target name="all" depends="pack"/>
+
+	<target name="compile">
+		<echo message=" **** Compiling classes of dtSource"/>
+		<mkdir dir="${build}"/>
+		<javac srcdir="src/java" destdir="${build}" classpathref="compile.class.path" debug="${debug}" verbose="${verbose}"/>
+	</target>
+	
+	<target name="pack" depends="compile">
+		<echo message=" **** Packing everything into JAR"/>
+		<mkdir dir="${dist}"/>
+		<jar jarfile="${dist}/${dtsource.jar.name}">
+			<metainf dir="src/conf">
+				<include name="**/*.*"/>
+				<exclude name=".keepme"/>
+				<exclude name=".cvsignore"/>
+			</metainf>
+			<fileset dir="${build}">
+				<include name="**/*.class"/>
+			</fileset>
+		</jar>
+	</target>
+
+	<target name="clean">
+		<echo message=" **** Cleaning "/>
+		<delete dir="${build}"/>
+		<delete dir="${dist}"/>
+	</target>
+
+</project>

@@ -1,0 +1,74 @@
+<html>
+<head>
+	<title> dt-Source: Hibernate and JDBC data sources for DisplayTag </title>
+	<style>
+	<!--
+		@page { size: 8.27in 11.69in; margin-left: 1.05in; margin-right: 1.05in; margin-top: 1in; margin-bottom: 1in }
+		p { margin-bottom: 0.08in }
+	-->
+	</style>
+</head>
+<body>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+_uacct = "UA-113078-8";
+urchinTracker();
+</script>
+
+	<center>
+	<img src="dtSourceLogo.jpg" alt="dt-Source: Hibernate and JDBC data sources for DisplayTag">
+	<br>
+	<font face="Lucid Sans" size="4"><b>Examples</b></font>
+	</center>
+	<br>
+	<br>
+	<font face="Lucida Sans" size="3">
+	Here is an example how to use <a href="http://displaytag.sourceforge.net/">DisplayTag</a> with 
+	<a href="http://sourceforge.net/projects/dt-source/">dt-Source</a> inside JSP.
+	<pre>
+	<code>
+	&lt;%@ taglib prefix="display" uri="http://displaytag.sf.net" %&gt;
+	&lt;%@ taglib prefix="dtsource" uri="http://dt-source.sf.net" %&gt;    
+	...
+        &lt;dtsource:hibernate pagesize="2" id="hibernateTable" list="users" sizelist="sizeusers" defaultsortName="id" entity="User" alias="u"&gt;
+                select ~alias~ from ~entity~ as ~alias~ order by ~sort~
+        &lt;/dtsource:hibernate&gt;
+        &lt;display:table name="users" sort="external" pagesize="2" id="hibernateTable" partialList="true" size="sizeusers" requestURI=""&gt;
+                &lt;display:column property="id" sortable="true" sortName="id" title="Id #" /&gt;
+                &lt;display:column property="username" sortable="true" sortName="username" title="Login" /&gt;
+                &lt;display:column property="password" sortable="false" sortName="password" title="Password" /&gt;
+                &lt;display:column property="created" sortable="true" sortName="created" title="Created Date" /&gt;
+        &lt;/display:table&gt;
+	...
+	</code>
+	</pre>
+	Above is Hibernate-powered variant. In this example we assume that you want to show already properly mapped <i>User</i> entity
+	with fields <i>id</i>, <i>username</i>, <i>password</i> and <i>created</i>.
+	<br>
+	Next one is JDBC powered example for table <i>simple_user</i>.
+	<pre>
+	<code>
+	...
+        &lt;dtsource:jdbc pagesize="2" id="jdbcTable" list="users" sizelist="sizeusers" defaultsortName="suUserId" table="simple_user" alias="u"&gt;
+                select * from ~table~ as ~alias~ order by ~sort~
+        &lt;/dtsource:jdbc&gt;
+        &lt;display:table name="users" sort="external" pagesize="2" id="jdbcTable" partialList="true" size="sizeusers" requestURI=""&gt;
+                &lt;display:column property="suUserId" sortable="true" sortName="suUserId" title="Id #" /&gt;
+                &lt;display:column property="suUsername" sortable="true" sortName="suUsername" title="Login" /&gt;
+                &lt;display:column property="suPassword" sortable="false" sortName="suPassword" title="Password" /&gt;
+                &lt;display:column property="suCreated" sortable="true" sortName="suCreated" title="Created Date" /&gt;
+        &lt;/display:table&gt;               
+	...
+	</code>
+	</pre>
+	It's important to have proper configuration of <a href="http://www.springframework.org">Spring</a>'s
+	application context in your Web application before usage. Be sure that your included all required
+	libraries by <a href="http://displaytag.sourceforge.net/">DisplayTag</a> and <a href="http://www.springframework.org">Spring</a>.
+	Of course, <a href="http://sourceforge.net/projects/dt-source/">dt-Source</a> needs to be included as well.
+	<br>
+	<br>
+	</font>
+</body>
+</html>

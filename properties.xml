@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="common-properties">
+
+	<property environment="env"/>
+
+	<property name="tomcat.home"			value="${env.CATALINA_HOME}"/>
+	<property name="dist"					value="dist"/>
+	<property name="build"				    value="build"/>
+	
+	<property name="demodts.war.name"		value="demodts.war"/>
+	<property name="dtsource.jar.name"	    value="dt-source.jar"/>
+	<property name="testsdt.jar.name"		value="testsdt.jar"/>
+
+	<property name="demodts.dir.name"		value="demodts-war"/>
+	<property name="dtsource.dir.name"	    value="dtsource-jar"/>
+	<property name="testsdt.dir.name"		value="testsdt-jar"/>
+
+    <property name="debug"                  value="false"/>
+    <property name="verbose"                value="false"/>
+	
+</project>

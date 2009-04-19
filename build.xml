@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="dts-complete" default="all">
+
+	<property name="root"	 value="."/>
+	<import file="${root}/properties.xml"/>
+
+	<target name="all">
+		<ant antfile="build.xml" dir="${root}/${dtsource.dir.name}" target="all" inheritAll="false" inheritRefs="false"/>
+		<ant antfile="build.xml" dir="${root}/${testsdt.dir.name}" target="all" inheritAll="false" inheritRefs="false"/>
+		<ant antfile="build.xml" dir="${root}/${demodts.dir.name}" target="all" inheritAll="false" inheritRefs="false"/>
+	</target>
+	
+	<target name="runtests">
+		<ant antfile="build.xml" dir="${root}/${testsdt.dir.name}" target="run" inheritAll="false" inheritRefs="false"/>
+	</target>
+
+	<target name="clean">
+		<ant antfile="build.xml" dir="${root}/${testsdt.dir.name}" target="clean" inheritAll="false" inheritRefs="false"/>
+		<ant antfile="build.xml" dir="${root}/${dtsource.dir.name}" target="clean" inheritAll="false" inheritRefs="false"/>
+		<ant antfile="build.xml" dir="${root}/${demodts.dir.name}" target="clean" inheritAll="false" inheritRefs="false"/>
+	</target>
+	
+	<target name="deploy">
+		<ant antfile="build.xml" dir="${root}/${demodts.dir.name}" target="deploy" inheritAll="false" inheritRefs="false"/>
+	</target>
+
+	<target name="undeploy">
+		<ant antfile="build.xml" dir="${root}/${demodts.dir.name}" target="undeploy" inheritAll="false" inheritRefs="false"/>
+	</target>
+
+</project>

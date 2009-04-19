@@ -1,0 +1,145 @@
+/* $Id: demodts.css,v 1.1 2006/04/07 19:53:12 oprokhorenko Exp $ */
+
+/**
+ * This stylesheet is used to create visual presentation.  Displaytag is completely
+ * customizable by CSS.  You can read more at:
+ *
+ * http://displaytag.sourceforge.net/11/tut_style.html
+ *
+ * Images for sortable rows are used from Displaytag's Live Examples.
+ **/
+
+body{ 
+	background-color: #fff; padding:0 0 0 0; margin:10px 10px 10px 10px;
+}
+
+body, input, select, td, textarea{ 
+	font-family:Verdana, Geneva, Arial, Helvetica, sans-serif; 
+	font-size: 11px;
+}
+
+h1, h2, h3, h4, h5, h6, p, strong, div, form, acronym, label, table, td, th, span, a, hr, code, pre, hr {
+	margin:0;
+	padding:0;
+	font-size: 1em;
+	background-repeat:no-repeat;
+	list-style-type:none;
+}
+
+table {
+	border: 1px solid #666;
+
+	width: 50%;
+	margin: 20px 0 20px 0;
+}
+
+th, td {
+	padding: 2px 4px 2px 4px;
+	text-align: left;
+	vertical-align: top;
+}
+
+thead tr {
+	background-color: LightSteelBlue;
+}
+
+th.sorted {
+/*	background-color: CornflowerBlue; */
+}
+
+th a, th a:visited {
+	color: black;
+}
+
+th a:hover {
+	text-decoration: underline;
+	color: black;
+}
+
+th.sorted a, th.sortable a {
+	background-position: right;
+	display: block;
+	width: 100%;
+}
+
+th.sortable a {
+	background-image: url(../images/arrow_off.png);
+}
+
+th.order1 a {
+	background-image: url(../images/arrow_down.png);
+}
+
+th.order2 a {
+	background-image: url(../images/arrow_up.png);
+}
+
+tr.odd {
+	background-color: White
+}
+
+tr.tableRowEven, tr.even {
+	background-color: WhiteSmoke
+}
+
+/* These below belongs to search tag of dt-source */
+
+table.search {
+	border: 0 solid white;
+	margin: 0 0 0 0;
+	width: auto;
+	background-color: white;
+}
+
+/* These below belongs to filter tag of dt-source */
+
+table.filters {
+	border: 0 solid white;
+	margin: 0 0 0 0;
+	width: auto;
+	background-color: white;
+}
+
+th.criteria { 
+	font-family: Verdana, Arial, Helvetica, sans-serif; 
+	font-size: 9pt; 
+	font-color: black;
+	font-weight: bold;
+	color: black; 
+	background-color: white;
+	text-decoration: none; 
+	padding: 3px 3px 3px 3px;
+	text-align: center;
+	vertical-align: middle;	
+}
+
+th.criteria a, th.criteria a:visited, th.criteria a:hover {
+	font-weight: bold;
+	color: black;
+	text-decoration: none;
+}
+
+th.criteria a:hover {
+	font-weight: bold;
+	text-decoration: underline;
+}
+
+th.criteria-selected {
+	font-family: Verdana, Arial, Helvetica, sans-serif; 
+	font-size: 10pt; 
+	font-color: white;
+	font-weight: bold;
+	color: white; 
+	background-color: black;
+	text-decoration: none; 
+	padding: 3px 3px 3px 3px;
+	text-align: center;
+	vertical-align: middle;	
+}
+
+th.criteria-selected a, th.criteria-selected a:visited, th.criteria-selected a:hover {
+	font-weight: bold;
+	color: white;
+	text-decoration: none;
+}
+

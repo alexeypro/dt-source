@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping default-lazy="true">
+
+	<class name="com.objecty.demodts.objects.User" table="simple_user">
+		<id name="id" column="suUserId" type="long" unsaved-value="0">
+			<generator class="native" />
+		</id>
+		<property name="username" type="string" column="suUsername"/>		
+		<property name="password" type="string" column="suPassword"/>		
+		<property name="email" type="string" column="suEmail"/>		
+		<property name="created" type="date" column="suCreated"/>		
+	</class>
+
+</hibernate-mapping>

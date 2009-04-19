@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+    
+    <!-- Service for AJAX updation of the field -->
+    <bean id="inPlaceUpdaterJdbcController" class="com.objecty.dtsource.mvc.InPlaceUpdaterController">    
+    	<property name="entityManager" ref="entityJdbcManager"/>
+    </bean>
+    <bean id="inPlaceUpdaterHibernateController" class="com.objecty.dtsource.mvc.InPlaceUpdaterController">    
+    	<property name="entityManager" ref="entityHibernateManager"/>
+    </bean>
+
+    <!-- Page, which will call controller -->
+	<bean id="urlMapping" class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+		<property name="mappings">
+			<props>
+				<prop key="/inPlaceUpdaterJdbc.service">inPlaceUpdaterJdbcController</prop>
+				<prop key="/inPlaceUpdaterHibernate.service">inPlaceUpdaterHibernateController</prop>				
+            </props>
+		</property>
+    </bean>
+	
+</beans>

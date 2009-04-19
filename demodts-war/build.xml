@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="demodts-war" default="all">
+
+	<property name="root"	 value=".."/>
+	<import file="${root}/properties.xml"/>
+
+	<path id="compile.class.path">
+		<fileset dir="${tomcat.home}/common/lib" includes="*-api.jar"/>
+		<fileset dir="${root}/lib" includes="**/*.jar"/>
+	</path>
+
+	<target name="all" depends="pack"/>
+
+	<target name="compile">
+		<echo message=" **** Compiling classes of demoDTS "/>
+		<mkdir dir="${build}/WEB-INF/classes"/>
+		<javac srcdir="src/java" destdir="${build}/WEB-INF/classes" classpathref="compile.class.path" debug="${debug}" verbose="${verbose}"/>
+	</target>
+	
+	<target name="prepare">
+		<echo message=" **** Copying *.hbm.xml and *.properties into /WEB-INF/classes/ "/>
+		<mkdir dir="${build}"/>
+		<copy todir="${build}/WEB-INF/classes">
+            <fileset dir="web/WEB-INF" includes="*.hbm.xml *.properties"/>
+			<fileset dir="src/java" includes="*.hbm.xml *.properties"/>
+		</copy>
+	</target>
+
+	<target name="pack" depends="compile, prepare">
+		<echo message=" **** Packing everything into WAR "/>
+		<mkdir dir="${dist}"/>
+		<war destfile="${dist}/${demodts.war.name}" webxml="web/WEB-INF/web.xml">
+			<fileset dir="web/resources" includes="**/*.js **/*.htm **/*.css **/*.js ajax/*.* images/*.* **/*.jsp **/*.xsl **/*.xslt **/*.html" excludes="WEB-INF/*.xml WEB-INF/*.properties **/.keepme **/.cvsignore **/.DS_Store"/>
+			<fileset dir="web" includes="WEB-INF/*.hbm.xml WEB-INF/*.xml WEB-INF/tlds/*.tld WEB-INF/classes/**/*.class WEB-INF/lib/**/*.jar" excludes="WEB-INF/web.xml WEB-INF/*.properties **/.keepme **/.cvsignore **/.DS_Store"/>
+			<fileset dir="${build}" includes="**/*.*"/>
+			<lib dir="${root}/lib" includes="**/*.jar"/>
+			<lib dir="${root}/${dtsource.dir.name}/${dist}" includes="**/*.jar"/>
+		</war>
+	</target>
+
+	<target name="deploy">
+		<echo message=" **** Deploying demoDTS WAR "/>
+		<copy todir="${tomcat.home}/webapps" overwrite="true">
+			<fileset dir="${dist}" includes="${demodts.war.name}"/>
+		</copy>
+	</target>
+
+	<target name="undeploy">
+		<echo message=" **** Undeploying demoDTS WAR "/>
+		<delete includeEmptyDirs="true" quiet="true">
+			<fileset dir="${tomcat.home}/webapps" includes="${demodts.war.name}"/>
+		</delete>
+	</target>
+
+	<target name="clean">
+		<echo message=" **** Cleaning "/>
+		<delete dir="${build}"/>
+		<delete dir="${dist}"/>
+	</target>
+
+</project>

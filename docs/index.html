@@ -1,0 +1,175 @@
+<head>
+	<title> dt-Source: Hibernate and JDBC data sources for DisplayTag </title>
+	<style>
+	<!--
+		@page { size: 8.27in 11.69in; margin-left: 1.05in; margin-right: 1.05in; margin-top: 1in; margin-bottom: 1in }
+		p { margin-bottom: 0.08in }
+	-->
+	</style>
+</head>
+
+<body>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+_uacct = "UA-113078-8";
+urchinTracker();
+</script>
+
+<center>
+
+<script type="text/javascript"><!--
+google_alternate_ad_url = "http://www.alternateurl.com/show?memid=1197&size=728x90";
+google_ad_client = "pub-6298512902433313";
+google_ad_width = 728;
+google_ad_height = 90;
+google_ad_format = "728x90_as";
+google_ad_type = "text_image";
+google_ad_channel ="5983406077";
+google_color_border = "F5F5F5";
+google_color_bg = "FFFFFF";
+google_color_link = "000000";
+google_color_url = "666666";
+google_color_text = "333333";
+//--></script>
+<script type="text/javascript"
+  src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+</script>
+
+<br>
+<br>
+
+<table border="0" width="780" cellspacing="3" cellpadding="3">
+<tr>
+<td valign="top" align=right width="142" bgcolor=WhiteSmoke>
+<font face="Verdana" size=2>
+<a href="index.html">Introduction</a><br>
+<a href="examples.html">Examples</a><br>
+<a href="downloads.html">Downloads</a><br>
+<br>
+</font>
+<center><a href="http://sourceforge.net/donate/index.php?group_id=157961"><img src="http://images.sourceforge.net/images/project-support.jpg" width="88" height="32" border="0" alt="Support This Project" /></a>
+
+<br><br>
+
+<script type="text/javascript"><!--
+google_alternate_ad_url = "http://www.alternateurl.com/show?memid=1197&size=120x600";
+google_ad_client = "pub-6298512902433313";
+google_ad_width = 120;
+google_ad_height = 600;
+google_ad_format = "120x600_as";
+google_ad_type = "text_image";
+google_ad_channel ="5983406077";
+google_color_border = "F5F5F5";
+google_color_bg = "F5F5F5";
+google_color_link = "000000";
+google_color_url = "666666";
+google_color_text = "333333";
+//--></script>
+<script type="text/javascript"
+  src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+</script>
+
+</center>
+
+<td width="500" bgcolor="#FFFFFF" valign="top">
+<p align="center"><font face="Verdana" size="5">dt-Source</font></p>
+
+<div align="center">
+<center>
+<table border="0" width="90%" height="125" cellspacing="3" cellpadding="3">
+<tr>
+<td width="40%" valign="top"><font size="2" face="Verdana">
+This is a taglib providing connection between Displaytag taglib and data sources, 
+allowing to load partial lists from different sources, like Hibernate, JDBC, etc. 
+Requires Spring framework.
+<br>
+<img src="blankline.png">
+During the project growth, it's getting new functionality and features like filters,
+searches, etc. completely customizable with CSS.
+<br><br>
+The most of the code was written by <a href="http://www.objecty.com">Olexiy Prokhorenko</a> 
+with some help from <a href="http://prokhorenko.us/white">Olexandr Prokhorenko</a> and 
+later was donated to Open Source Community.  We support this project free of charge but we 
+<a href="http://sourceforge.net/donate/index.php?group_id=157961">welcome donations</a>. :)
+<br><br>
+<div align="right"><font size=1><i>
+<a href="http://www.objecty.com">Olexiy Prokhorenko</a>, 
+<a href="mailto:olexiy@objecty.com">olexiy at objecty dot com</a>
+<br>
+<a href="http://prokhorenko.us/white">Olexandr Prokhorenko</a>, 
+<a href="mailto:olexandr@prokhorenko.us">olexandr at prokhorenko dot us</a>
+</i>
+</font>
+</div>
+</font></td>
+
+<td width="25%" bgcolor=WhiteSmoke valign="top">
+<p align="center">
+<img src="dtSourceLogo.jpg" alt="dt-Source: Hibernate and JDBC data sources for DisplayTag">
+</td>
+</tr>
+</table>
+</center>
+</div>
+<div align="center">
+<center>
+ 
+</center>
+</div>
+<div align="center">
+<center>
+<font size="3" face="Verdana"><b>Introduction</b></font>
+</center>
+</div>
+<p align="left">
+<font face="Verdana" size="2">
+	Every developer needs clean and clear solution. Nowadays, it also needs to be fast. That's why many people choose 
+	<a href="http://displaytag.sourceforge.net/">DisplayTag</a> as a helper tool. It's an awesome open source suite 
+	of custom tags that provide high-level web presentation patterns which will work in an MVC model. The library provides 
+	a significant amount of functionality while still being easy to use. However, few features are missing them. Among them
+	is an ability to load lists from data sources, such as wide-spread <a href="http://www.hibernate.org">Hibernate</a> or
+	classic <a href="http://java.sun.com/products/jdbc/">JDBC</a>. Even if there are <a href="http://displaytag.sourceforge.net/11/tut_sources.html">few methods</a> 
+	how to use them, still they need to load all records from the storage, before they will be displayed. That can work for you
+	if your database is pretty small. But once you have thousands of records, you will get a real pain in the ass. You will need
+	to fetch all of records before showing just twenty or fifty of them per page. That's not smart, but there is no other 
+	way. Developers of <a href="http://displaytag.sourceforge.net/">DisplayTag</a> say that: 
+</font>
+<br>
+<center>
+<img src="DisplaytagWillNotSupport.jpg" alt="No default sort for data sources in DisplayTag">
+</center>
+<br>
+<font face="Verdana" size="2">
+	We want to fill this spot. <b><a href="http://sourceforge.net/projects/dt-source/">dt-Source</a></b> is a custom JSP tag library 
+	as well. Thanks to new features of <a href="http://displaytag.sourceforge.net/11/migrating.html">DisplayTag 1.1</a> and 
+	<a href="http://sourceforge.net/projects/dt-source/">dt-Source</a> it is possible to load partial lists and do external sorting. 
+	So, now, if you have 10,000 records to fetch, but you show only 50 per page, only 50 will be fetched. And you are not losing sorting 
+	features - everything remains the same, but things will move much faster. And it's extremely easy!
+<br>
+<br>
+	<a href="http://sourceforge.net/projects/dt-source/">dt-Source</a> is <a href="http://www.springframework.org">Spring</a>-powered, and 
+	supports <a href="http://www.hibernate.org">Hibernate</a> with <a href="http://java.sun.com/products/jdbc/">JDBC</a> data sources.
+<br>
+<br>
+	Click <a href="examples.html">here</a> to check our <a href="examples.html">examples</a> how to use <a href="http://sourceforge.net/projects/dt-source/">dt-Source</a>
+	with <a href="http://displaytag.sourceforge.net/">DisplayTag</a>. And you can <a href="downloads.html">download</a> latest pre-built JAR 
+	and simple demo <a href="downloads.html">here</a>.
+<br>
+<br>
+</font>
+</p>
+
+<p align="left"><font size="2" face="Verdana">
+</font></p>
+
+<p align="center">
+</td>
+</table>
+
+<font size=0 face="Arial">This site is better viewed with Mozilla Firefox.</font>
+
+</center>
+
+</body>
